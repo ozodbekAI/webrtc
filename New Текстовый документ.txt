@@ -1,0 +1,27 @@
+webrtc_conference/
+├── auth_service/
+│   ├── main.py              # FastAPI ilovasi (JWT autentifikatsiyasi)
+│   ├── database.py          # Async PostgreSQL ulanishi
+│   ├── requirements.txt
+│   └── Dockerfile
+├── signaling_service/
+│   ├── main.py              # FastAPI + WebSocket
+│   ├── database.py
+│   ├── requirements.txt
+│   └── Dockerfile
+├── media_service/
+│   ├── main.py              # FastAPI + aiortc (WebRTC)
+│   ├── requirements.txt
+│   └── Dockerfile
+├── task_service/
+│   ├── tasks.py             # Celery vazifalari
+│   ├── requirements.txt
+│   └── Dockerfile
+├── docker-compose.yml       # Docker Compose fayli
+├── kong/
+│   └── kong.yml             # Kong konfiguratsiyasi
+├── prometheus/
+│   └── prometheus.yml       # Prometheus konfiguratsiyasi
+├── loki/
+│   └── loki-config.yml      # Loki konfiguratsiyasi
+└── README.md                # Loyiha haqida ma'lumot

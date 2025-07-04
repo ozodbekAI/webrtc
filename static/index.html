@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Voice & Video Conference</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-video"></i> Voice & Video Conference</h1>
+
+    <div class="room-form">
+      <input id="roomid" placeholder="Room ID" class="input" />
+      <input id="name" placeholder="Your name" class="input" />
+      <button id="joinBtn" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Join Room</button>
+      <button id="toggleAudioBtn" class="btn" disabled><i class="fas fa-microphone"></i> Mute Audio</button>
+      <button id="toggleVideoBtn" class="btn" disabled><i class="fas fa-video"></i> Disable Video</button>
+    </div>
+
+    <div class="users-card">
+      <h3><i class="fas fa-users"></i> Users in Room</h3>
+      <ul id="userList"></ul>
+    </div>
+
+    <div class="peers-card">
+      <h3><i class="fas fa-stream"></i> Peer Streams</h3>
+      <div id="peerStreams" class="peer-grid"></div>
+    </div>
+
+    <div class="status-card">
+      <h3><i class="fas fa-info-circle"></i> Connection Status</h3>
+      <div id="statusMessages"></div>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
