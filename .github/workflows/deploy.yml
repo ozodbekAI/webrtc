@@ -1,0 +1,15 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call restart script (git pull + reload)
+        run: |
+          sshpass -p "${{ secrets.PASSWORD }}" ssh -o StrictHostKeyChecking=no \
+            ${{ secrets.USER }}@${{ secrets.HOST }} \
+            "/home/${{ secrets.USER }}/webrtc/restart.sh"
