@@ -8,8 +8,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Call restart script (git pull + reload)
+      - name: Remote build & restart
         run: |
           sshpass -p "${{ secrets.PASSWORD }}" ssh -o StrictHostKeyChecking=no \
             ${{ secrets.USER }}@${{ secrets.HOST }} \
-            "/home/root/webrtc/restart.sh"
+            "/root/webrtc/restart.sh"
