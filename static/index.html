@@ -1,40 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Voice & Video Conference</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="/static/style.css" />
+    <meta charset="UTF-8">
+    <title>Modern Video Conference</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 </head>
-<body>
-  <div class="container">
-    <h1><i class="fas fa-video"></i> Voice & Video Conference</h1>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="max-w-5xl w-full bg-white rounded-2xl shadow-2xl p-6 space-y-6">
+        <h1 class="text-3xl font-bold text-blue-900 flex items-center justify-center gap-2">
+            <i class="fas fa-video"></i> Video Conference
+        </h1>
 
-    <div class="room-form">
-      <input id="roomid" placeholder="Room ID" class="input" />
-      <input id="name" placeholder="Your name" class="input" />
-      <button id="joinBtn" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Join Room</button>
-      <button id="toggleAudioBtn" class="btn" disabled><i class="fas fa-microphone"></i> Mute Audio</button>
-      <button id="toggleVideoBtn" class="btn" disabled><i class="fas fa-video"></i> Disable Video</button>
+        <div id="joinSection" class="flex flex-col md:flex-row gap-4">
+            <input id="roomIdInput" type="text" placeholder="Room ID" class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input id="nameInput" type="text" placeholder="Your name" class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="joinButton" class="flex-1 p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                <i class="fas fa-sign-in-alt"></i> Join Room
+            </button>
+        </div>
+
+        <div id="roomSection" class="space-y-6 hidden">
+            <div class="flex flex-col md:flex-row gap-4">
+                <button id="toggleAudio" class="flex-1 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <i class="fas fa-microphone"></i> Mute Audio
+                </button>
+                <button id="toggleVideo" class="flex-1 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <i class="fas fa-video"></i> Disable Video
+                </button>
+                <button id="switchCamera" class="flex-1 p-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <i class="fas fa-camera"></i> Switch Camera
+                </button>
+                <button id="toggleScreenShare" class="flex-1 p-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <i class="fas fa-desktop"></i> Share Screen
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-blue-900 flex items-center gap-2">
+                        <i class="fas fa-user"></i> Your Video
+                    </h3>
+                    <video id="localVideo" autoplay playsinline muted class="w-full h-48 rounded-lg object-cover"></video>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-blue-900 flex items-center gap-2">
+                        <i class="fas fa-users"></i> Users in Room
+                    </h3>
+                    <ul id="userList" class="space-y-2"></ul>
+                </div>
+            </div>
+
+            <div id="remoteVideos" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+            <div class="bg-gray-50 p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold text-blue-900 flex items-center gap-2">
+                    <i class="fas fa-comments"></i> Chat
+                </h3>
+                <div id="chatMessages" class="h-40 overflow-y-auto mb-4 p-2 bg-white rounded-lg"></div>
+                <div class="flex gap-2">
+                    <input id="chatInput" type="text" placeholder="Type a message..." class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="sendChat" class="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold text-blue-900 flex items-center gap-2">
+                    <i class="fas fa-info-circle"></i> Connection Status
+                </h3>
+                <div id="statusMessages" class="h-40 overflow-y-auto"></div>
+            </div>
+        </div>
     </div>
-
-    <div class="users-card">
-      <h3><i class="fas fa-users"></i> Users in Room</h3>
-      <ul id="userList"></ul>
-    </div>
-
-    <div class="peers-card">
-      <h3><i class="fas fa-stream"></i> Peer Streams</h3>
-      <div id="peerStreams" class="peer-grid"></div>
-    </div>
-
-    <div class="status-card">
-      <h3><i class="fas fa-info-circle"></i> Connection Status</h3>
-      <div id="statusMessages"></div>
-    </div>
-  </div>
-
-  <script src="/static/js/main.js"></script>
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
